@@ -1,2 +1,2 @@
-﻿export * from "./EmptyLayout";
+﻿export * from "./LoginLayout";
 export * from "./MainLayout";

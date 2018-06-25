@@ -1,72 +1,88 @@
-import React from 'react';
-import { Router, Route, Link } from 'react-router-dom';
+import React, { Component } from 'react';
+//import { Router, Route, Link } from 'react-router-dom';
+//import { BrowserRouter as Router, Route, Link, Match, Redirect, Switch } from 'react-router-dom'
+import { Router, Route, Link, Match, Redirect, Switch } from 'react-router-dom'
+
 import { connect } from 'react-redux';
 
 import { history } from '../_helpers';
-import { alertActions } from '../_actions';
+//import { alertActions } from '../_actions';
 import { PrivateRoute } from '../_components';
 import { HomePage } from '../HomePage';
 import { LoginPage } from '../LoginPage';
 import { RegisterPage } from '../RegisterPage';
-import MainLayout from '../Layouts/MainLayout';
-import EmptyLayout from '../Layouts/EmptyLayout';
+import { LoginLayout, MainLayout} from '../Layouts';
+//import MainLayout from '../Layouts/MainLayout';
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
+/*
+  Layouts, inline define here for demo purpose
+  you may want to define in another file instead
+ */
 
-        const { dispatch } = this.props;
-        history.listen((location, action) => {
-            // clear alert on location change
-            dispatch(alertActions.clear());
-        });
-    }
+//const DashboardLayout = ({ children, ...rest }) => {
+//    return (
+//        <div>
+//            <div>
+//                Sidebar Here
+//            </div>
+//            <div>{children}</div>
+//        </div>
+//        )
+//}
+
+//const LoginLayout = ({ children, ...rest })=>{
+//    return (
+//        <div>
+//            <div>{children}</div>
+//        </div>
+//        )
+//}
+
+/*
+  Route wrapper
+ */
+
+const MainRoute = ({ component: Component, ...rest }) => {
+    return (
+        <Route {...rest} render={matchProps => (
+            <MainLayout>
+                <Component {...matchProps} />
+            </MainLayout>
+        )} />
+    )
+}
+
+
+const LoginLayoutRoute = ({ component: Component, ...rest }) => {
+    return (
+        <Route {...rest} render={matchProps => (
+            <LoginLayout>
+                <Component {...matchProps} />
+            </LoginLayout>
+        )} />
+    )
+};
+
+/*
+   App
+ */
+
+class App extends Component {
     render() {
-        const { alert } = this.props;
         return (
-            <div className="jumbotron">
-                <div className="container">
-                    <div className="col-sm-8 col-sm-offset-2">
-                        {alert.message &&
-                            <div className={`alert ${alert.type}`}>{alert.message}</div>
-                        }
-                        <Router history={history}>
-
-                            <Route component={MainLayout}>
-                                <PrivateRoute exact path="/" component={MainLayout} />                            
-                                <Route path="/register" component={RegisterPage} />
-                                <Link to="/login">Logout</Link>
-                            </Route>
-                            <Route component={EmptyLayout}>
-                                <Route path="/login" component={LoginPage} />
-                            </Route>
-                        </Router>
-                    </div>
-                </div>
-            </div>
+            <Router history={history}>
+                <Switch>
+                    <Route exact path="/">
+                       <Redirect to="/login" />
+                    </Route >                   
+                    <LoginLayoutRoute path="/login" component={LoginPage} />
+                    <LoginLayoutRoute path="/signup" component={RegisterPage} />
+                    <MainRoute path="/home" component={HomePage} />
+                    <MainRoute path="/register" component={RegisterPage} />
+                </Switch>
+            </Router>
         );
     }
-    //render() {
-    //    const { alert } = this.props;
-    //    return (
-    //        <div className="jumbotron">
-    //            <div className="container">
-    //                <div className="col-sm-8 col-sm-offset-2">
-    //                    {alert.message &&
-    //                        <div className={`alert ${alert.type}`}>{alert.message}</div>
-    //                    }
-    //                    <Router history={history}>
-    //                        <div>
-    //                            <PrivateRoute exact path="/" component={HomePage} />
-    //                            <Route path="/login" component={LoginPage} />
-    //                            <Route path="/register" component={RegisterPage} />
-    //                        </div>
-    //                    </Router>
-    //                </div>
-    //            </div>
-    //        </div>
-    //    );
-    //}
 }
 
 function mapStateToProps(state) {

@@ -17,9 +17,10 @@ function login(username, password) {
 
         userService.login(username, password)
             .then(
-                user => { 
+            user => { 
+                    debugger;
                     dispatch(success(user));
-                    history.push('/');
+                    history.push('/home');
                 },
                 error => {
                     dispatch(failure(error.toString()));
