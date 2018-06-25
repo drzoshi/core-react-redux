@@ -1,0 +1,9 @@
+﻿
+.loginform-container {
+    flex-grow: 1;
+    background-image: url('./bg_login.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+}
+

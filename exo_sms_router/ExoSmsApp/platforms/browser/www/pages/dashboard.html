@@ -1,0 +1,66 @@
+<div class="page" data-page="dashboard" >
+	<div class="navbar">
+	  <div class="navbar-inner">
+		<div class="left">
+		  <a href="#" class="link icon-only panel-open" data-panel="left">
+			<i class="icon f7-icons ios-only">menu</i>
+			<i class="icon material-icons md-only">menu</i>
+		  </a>
+		</div>
+		<div class="title sliding">Framework7</div>
+		<div class="right">
+		  <a class="link icon-only searchbar-enable" data-searchbar=".searchbar-components">
+			<i class="icon f7-icons ios-only">search_strong</i>
+			<i class="icon material-icons md-only">search</i>
+		  </a>
+		</div>
+		<form data-search-container=".components-list" data-search-in="a" class="searchbar searchbar-expandable searchbar-components searchbar-init">
+		  <div class="searchbar-inner">
+			<div class="searchbar-input-wrap">
+			  <input type="search" placeholder="Search components"/>
+			  <i class="searchbar-icon"></i>
+			  <span class="input-clear-button"></span>
+			</div>
+			<span class="searchbar-disable-button">Cancel</span>
+		  </div>
+		</form>
+	  </div>
+	</div>
+	<div class="page-content">
+		<div class="list" id="form_message">
+		  <ul>
+		    <li class="item-content item-input disabled">
+		      <div class="item-media"><i class="f7-icons">eye_fill</i></div>
+		      <div class="item-inner">
+		        <div class="item-title item-floating-label">Device_ID <i>(firebase registration id)</i></div>
+		        <div class="item-input-wrap">
+		        	<textarea class="resizable" rows="3" id="lbl_device_id" ></textarea>
+		        </div>
+		      </div>
+		    </li>
+		    <li class="item-content item-input">
+		      <div class="item-media"><i class="f7-icons">phone_fill</i></div>
+		      <div class="item-inner">
+		        <div class="item-title item-floating-label">Phone Number</div>
+		        <div class="item-input-wrap">
+		          <input type="number" name="phoneNumber" id="input_phone_number" maxlength="10">
+		          <span class="input-clear-button"></span>
+		        </div>
+		      </div>
+		    </li>
+		    <li class="item-content item-input">
+		    	<div class="item-media"><i class="f7-icons">email</i></div>
+		      	<div class="item-inner">
+		        	<div class="item-title item-floating-label">Message</div>
+		        	<div class="item-input-wrap">
+	        			<textarea class="resizable" rows="4" id="input_message" name="message"></textarea>
+		          		<span class="input-clear-button"></span>
+		        	</div>
+		      </div>
+		    </li>
+		    <li class="item-content item-input ">		
+		    	<button class="button button-fill" onclick="mainJs.sendSMSManually(this)">Send SMS</button>	      	
+		    </li>
+		  </ul>
+		</div>
+</div>

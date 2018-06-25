@@ -1,0 +1,101 @@
+<template>
+	<div class="page">
+		<div class="navbar">
+		  <div class="navbar-inner sliding">
+			<div class="left">
+			  <a href="#" class="link back">
+				<i class="icon icon-back"></i>
+				<span class="ios-only">Back</span>
+			  </a>
+			</div>
+			<div class="title">Themes</div>
+		  </div>
+		</div>
+		<div class="page-content">
+			<div class="block-title">Themes 1</div>
+			<div class="block">
+				<div class="row">
+					<div class="col-50 bg-color-white" style="cursor: pointer; padding: 30px; border: 1px solid rgba(0,0,0,0.1)">
+						<a href="./index.html?theme=ios" class="external">iOS Theme</a> 
+					</div>
+					<div class="col-50 bg-color-white" style="cursor: pointer; padding: 30px; border: 1px solid rgba(0,0,0,0.1)">
+						<a href="./index.html?theme=md" class="external">Material (MD) Theme</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="block-title">Layout Themes</div>
+			<div class="block">
+				<div class="row">
+				  <div class="col-50 bg-color-white" @click="setLayoutTheme('light')" style="cursor: pointer; padding: 30px; border: 1px solid rgba(0,0,0,0.1)"></div>
+				  <div class="col-50 bg-color-black" @click="setLayoutTheme('dark')"  style="cursor: pointer; padding: 30px; border: 1px solid rgba(255,255,255,0.1)"></div>
+				</div>
+			</div>
+			
+			<div class="block-title">Color Theme</div>
+			<div class="block">
+				<div class="row">
+					{{#each colors}}
+					  <div class="col-33">
+							<button class="button button-fill button-round button-raised color-{{this}}" @click="setColorTheme('{{this}}')">{{this}}</button>
+					  </div>
+					{{/each}}
+				  <div class="col-33"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+<style scoped>
+  .button {
+    margin-bottom: 1em;
+    text-transform: capitalize;
+  }
+</style>
+<script>
+  return {
+    data: function () {
+      var colors = [
+        'red',
+        'green',
+        'blue',
+        'pink',
+        'yellow',
+        'orange',
+        'gray',
+        'black',
+      ];
+      return {
+        colors: colors,
+        colorsAmount: colors.length,
+      };
+    },
+    methods: {
+      setLayoutTheme: function (theme) {
+        var self = this;
+        self.$app.root.removeClass('theme-dark theme-light').addClass('theme-' + theme);
+		var lsTheme = localStorage.getItem("theme");
+		if(theme)
+		{
+			lsTheme = JSON.parse(lsTheme);
+			lsTheme["layout"] = theme;
+			localStorage.setItem("theme", JSON.stringify(lsTheme));
+		}
+      },
+      setColorTheme: function (color) {
+        var self = this;
+        var app = self.$app;
+        var currentColorClass = app.root[0].className.match(/color-theme-([a-z]*)/);
+        if (currentColorClass) app.root.removeClass(currentColorClass[0])
+          app.root.addClass('color-theme-' + color);
+		  
+		  var theme = localStorage.getItem("theme");
+		  if(theme){
+			theme = JSON.parse(theme);
+			theme["color"] = color;
+			localStorage.setItem("theme", JSON.stringify(theme));
+		  }
+      }
+    }
+  }
+</script>
